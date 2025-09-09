@@ -2,16 +2,30 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tower Rush — Pulsing Button</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tower Rush — Art Ready</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <img src="images/tower-rush-cover.png" alt="Tower Rush" class="cover">
-    <a href="https://lkyv.cc/6d712259" class="custom-btn pulse" target="_blank">MAIN SEKARANG</a>
-  </div>
+  <main class="stage">
+    <!-- SKY -->
+    <img class="sky" src="assets/sky_bg.png" alt="sky">
+
+    <!-- CLOUDS (tileable) -->
+    <div class="clouds slow" style="--tile:url('assets/clouds_tile.png')"></div>
+    <div class="clouds fast" style="--tile:url('assets/clouds_tile.png')"></div>
+
+    <!-- CRANE + SWING -->
+    <div class="crane">
+      <img class="top-block swing" src="assets/top_house_rope_short_2.png" alt="top house">
+    </div>
+
+    <!-- GROUND / CITY -->
+    <img class="city" src="assets/city_base.png" alt="city">
+
+    <!-- CTA -->
+    <a class="cta pulse" href="https://lkyv.cc/6d712259" target="_blank" rel="noopener">MAIN SEKARANG</a>
+  </main>
 </body>
 </html>
