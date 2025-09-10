@@ -1,0 +1,105 @@
+/* === Triple Chevron Arrows (CodePen-style), injected INSIDE CTA ========== */
+/* Base arrow is DOWN; left/right groups are rotated. */
+
+:root{
+  --chev-color: #ff2d55;
+  --chev-size: 18px;          /* размер одной «галочки» */
+  --chev-gap: 12px;           /* расстояние между ними (чуть больше) */
+  --chev-thickness: 7px;      /* ТОЛЩЕ для лучшей заметности */
+  --chev-dur: 1.6s;           /* скорость анимации */
+  --chev-distance-x: 16px;    /* отступ слева/справа от кнопки */
+  --chev-distance-top: 30px;  /* ОТСТУП ВЕРХНЕЙ стрелки от кнопки (увеличен) */
+  --chev-glow: 0 0 14px currentColor; /* лёгкое свечение для читаемости */
+}
+
+a.cta, button.cta, [data-cta]{ /* не трогаем absolute, только если static */
+  /* intentionally empty to avoid overriding positioning */
+}
+
+/* Overlay host */
+.cta .cta-arrows,
+button.cta .cta-arrows,
+a.cta .cta-arrows,
+[data-cta] .cta-arrows{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:3;
+  overflow:visible;
+}
+
+/* Position groups relative to the CTA */
+.cta-arrow{
+  position:absolute;
+  width: var(--chev-size);
+  height: calc(var(--chev-size) * 3 + var(--chev-gap) * 2);
+  color: var(--chev-color);
+  filter: drop-shadow(var(--chev-glow));
+}
+
+.cta-arrow.top   { 
+  top:  calc(-1 * (var(--chev-size) + var(--chev-gap) + var(--chev-distance-top))); 
+  left: 50%; 
+  transform: translateX(-50%) rotate(0deg); 
+}
+.cta-arrow.left  { 
+  left: calc(-1 * (var(--chev-size) + var(--chev-gap) + var(--chev-distance-x))); 
+  top:50%; 
+  transform: translateY(-50%) rotate(-90deg); 
+}
+.cta-arrow.right { 
+  right: calc(-1 * (var(--chev-size) + var(--chev-gap) + var(--chev-distance-x))); 
+  top:50%; 
+  transform: translateY(-50%) rotate(90deg); 
+}
+
+/* One chevron (as in CodePen: two rectangles skewed) */
+.chevron{
+  position:absolute;
+  left:50%;
+  width: var(--chev-size);
+  height: var(--chev-thickness);
+  transform: translateX(-50%);
+  opacity:0;
+  animation: chev-move var(--chev-dur) ease-out infinite;
+}
+.chevron::before,
+.chevron::after{
+  content:"";
+  position:absolute; top:0; height:100%; width:50%;
+  background: currentColor;
+}
+.chevron::before{ left:0;  transform: skewY(45deg); }
+.chevron::after { right:0; transform: skewY(-45deg); }
+
+/* Stacking and delays (exactly three) */
+.chevron:nth-child(1){ top: 0;                     animation-delay: 0s;    }
+.chevron:nth-child(2){ top: calc(var(--chev-gap)); animation-delay: .15s; }
+.chevron:nth-child(3){ top: calc(var(--chev-gap) * 2); animation-delay: .30s; }
+
+@keyframes chev-move{
+  0%   { opacity:0; transform: translate(-50%, -30%); }
+  25%  { opacity:1; transform: translate(-50%, 0); }
+  50%  { opacity:1; transform: translate(-50%, 30%); }
+  100% { opacity:0; transform: translate(-50%, 60%); }
+}
+
+/* Optional hover pulse */
+.cta:hover .chevron{
+  animation-duration: calc(var(--chev-dur) * .8);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .chevron{ animation:none; opacity:1; }
+}
+
+/* Synced arrow animation */
+
+@keyframes arrowPulse {
+  0%   { transform: translateY(0); opacity: 0.6; }
+  50%  { transform: translateY(-8px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0.6; }
+}
+
+.cta-arrows img { animation: arrowPulse 1.2s ease-in-out infinite; }
